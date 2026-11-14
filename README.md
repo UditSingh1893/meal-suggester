@@ -1,65 +1,130 @@
-# PantryPilot — SPM local project
+# PantryPilot — Meal Suggester
 
-Single-user meal suggester: Next.js frontend, Express backend, MongoDB database.
+A single-user meal suggester built with Next.js, Express, TypeScript, and MongoDB for B.Tech Software Project Management coursework.
+
+## Problem and objectives
+
+Choosing meals often involves checking available ingredients against recipes manually. PantryPilot helps students and home cooks maintain a pantry, find matching recipes, identify missing ingredients, save favorites, and prepare shopping lists. The project aims to simplify meal planning and encourage efficient ingredient use.
+
+## Features
+
+| Module | Functionality |
+| --- | --- |
+| Dashboard | Pantry and favorite counts, recommendation counts, shopping progress |
+| Pantry | Add, view, edit, delete ingredients; optional quantity and unit |
+| Recipes | Six sample recipes; create, search, view, edit, delete |
+| Recommendations | Ingredient match percentage, ranking, available/missing ingredients |
+| Favorites | Save and remove recipes |
+| Shopping | Generate missing ingredients, mark purchased, remove items |
+
+![PantryPilot recommendations showing ingredient coverage and missing ingredients](docs/screenshots/04-recommendations.png)
+
+See [all seven application screenshots](docs/screenshots/README.md) for the pantry-to-shopping demonstration.
+
+## Technology and structure
+
+| Layer | Technology | Location |
+| --- | --- | --- |
+| Frontend | Next.js, React, TanStack Query, Tailwind CSS, TypeScript | `apps/frontend` |
+| Backend | Express, Zod, Mongoose, TypeScript | `apps/backend` |
+| Database | MongoDB | Models under backend `src/modules` |
+| Tests | Vitest, Supertest, Playwright | Workspace test directories |
+| Documentation | Requirements, planning, design, risks, guides | `docs` |
 
 ## Windows quick start
 
-Prerequisites: Node.js 20 or newer, npm, and MongoDB Community Server running locally. Docker is optional.
+Prerequisites: Node.js 20.19+ or 22.13+ is recommended for the locked tooling, npm, and MongoDB Community Server running locally. Docker Desktop is an alternative for MongoDB.
 
-Open PowerShell in this folder:
+Clone this repository using its GitHub URL, open PowerShell in the cloned directory, then run:
 
-~~~powershell
-npm install
+```powershell
+npm ci
 npm run seed
 npm run dev
-~~~
+```
 
-Open http://localhost:3000. The API runs at http://localhost:4000/api/v1.
-No account, environment-file copy, Redis, worker, or other service is required.
-Press Ctrl+C to stop the frontend and backend.
+Open http://localhost:3000. The API runs at http://localhost:4000/api/v1. The shared workspace opens directly using the default configuration. Press Ctrl+C to stop both apps.
 
-If using Docker for MongoDB instead of a local installation, start Docker Desktop, then run:
+If using Docker instead of a local MongoDB installation, start Docker Desktop and run this before seeding:
 
-~~~powershell
+```powershell
 docker compose up -d mongo
-~~~
+```
 
-Alternatively start the apps in two terminals with npm run dev -w apps/backend and npm run dev -w apps/frontend.
+Alternatively run `npm run dev -w apps/backend` and `npm run dev -w apps/frontend` in separate terminals.
 
-## Required functionality
+Seeding updates six recipes by slug, preserving pantry, favorites, and shopping lists. Rerunning replaces edits to those sample recipes. Use a dedicated demo database to preserve existing data.
 
-- Pantry: add, view, edit, delete ingredients.
-- Recipes: six included recipes; add, edit, delete, search and view ingredients/instructions.
-- Matching: unique ingredient sets; percentage = available required ingredients / all required ingredients × 100. Missing = recipe ingredients minus pantry.
-- Recommendations: Can Make Now at 100%, Almost Ready at 70% or higher, More Ingredients Needed below 70%. Categories and cooking time are optional recipe metadata.
-- Favorites: save, list, remove.
-- Shopping: add missing ingredients, view items, mark purchased, remove items.
+## Configuration
 
-Ingredient matching uses normalized names; quantities do not affect set membership. The 70% cutoff is a local implementation choice because the brief says high partial match without specifying a number.
+The backend reads process environment variables directly. Use PowerShell to apply overrides, following the names in `.env.example`. The application includes ready-to-use local defaults.
 
-MongoDB persists data. Seeding is repeatable and updates the six sample recipes by slug; it does not clear pantry, favorites or shopping lists. Run it once for the demo, since rerunning replaces edits to those sample recipes.
+| Variable | Default | Where to set |
+| --- | --- | --- |
+| `MONGODB_URI` | `mongodb://127.0.0.1:27017/meal_suggester` | PowerShell before seed/start |
+| `BACKEND_PORT` | `4000` | PowerShell before start |
+| `FRONTEND_ORIGIN` | `http://localhost:3000` | PowerShell before start |
+| `NEXT_PUBLIC_API_BASE_URL` | `http://localhost:4000/api/v1` | `apps/frontend/.env.local`, then restart/rebuild frontend |
+
+Example:
+
+```powershell
+$env:MONGODB_URI='mongodb://127.0.0.1:27017/meal_suggester_demo'
+npm run seed
+npm run dev
+```
+
+Before starting, run MongoDB on port 27017 and make ports 3000/4000 available. When changing the backend port, update the frontend API URL too.
+
+## Matching rules
+
+Match percentage is the available unique required ingredients divided by all unique required ingredients, multiplied by 100. Four of five ingredients gives **80%**. Categories are Can Make Now at 100%, Almost Ready at 70% to below 100%, and More Ingredients Needed below 70%.
+
+The 70% cutoff is a project choice. Ranking also considers missing ingredient count and cooking time; see [the exact matching rules](docs/matching.md).
+
+The app provides one shared workspace for local meal planning. Matching uses ingredient presence, with normalized names and aliases providing consistent ingredient identity. Pantry quantities and units support inventory recording; optional recipe metadata is available through the API.
 
 ## Checks
 
-~~~powershell
+```powershell
 npm test
 npm run typecheck
+npm run lint
 npm run build
-~~~
+```
 
-Integration tests use a temporary MongoDB process and may download its binary on first run. To use a dedicated existing test database instead:
+Root tests and lint target the backend. Browser tests are separate and require running apps, seeded data, and Playwright Chromium:
 
-~~~powershell
+```powershell
+npm exec -w apps/frontend -- playwright install chromium
+npm run test:e2e -w apps/frontend
+```
+
+Installation and integration-test setup may download a temporary MongoDB executable. Alternatively, tests can use a dedicated existing database:
+
+```powershell
 $env:TEST_MONGODB_URI='mongodb://127.0.0.1:27017/meal_suggester_test'
 npm test
-~~~
+```
 
-Tests clear that test database's collections. Never point TEST_MONGODB_URI at your demo database.
+Tests clear collections in that test database. Keep it separate from demo data. See [test evidence](docs/test-report.md) and [earlier validation](VALIDATION.md).
 
-## Configuration and troubleshooting
+## Coursework documentation
 
-Defaults work without any .env file. To override the database, set $env:MONGODB_URI='mongodb://127.0.0.1:27017/meal_suggester' before seed/start. BACKEND_PORT and FRONTEND_ORIGIN can also be set in PowerShell. If changing the backend port, set NEXT_PUBLIC_API_BASE_URL in apps/frontend/.env.local to the matching URL including /api/v1.
+- [Software requirements specification](docs/requirements.md)
+- [Project plan, WBS, and estimates](docs/project-plan.md)
+- [Risk register](docs/risk-register.md)
+- [Architecture, use cases, and recommendation flow](docs/architecture.md)
+- [Database design](docs/database-design.md)
+- [API reference](docs/api.md)
+- [Matching specification](docs/matching.md)
+- [Test report and traceability](docs/test-report.md)
+- [User guide and demo walkthrough](docs/user-guide.md)
+- [Screenshot gallery and checklist](docs/screenshots/README.md)
+- [Repository review](docs/repository-review.md)
 
-If the API cannot start, check MongoDB is running on port 27017. If a port is in use, stop the previous app instance. This app is intended for a local college demonstration; it has one shared workspace and no accounts.
+## Submission details and attribution
 
-Production infrastructure removed: Redis caching, BullMQ worker, rate limiting, metrics/monitoring, reverse proxy, production containers and CI workflow. Settings/profile/auth pages are absent. Recipe data is read directly on every request so pantry and recipe changes immediately affect recommendations.
+Course: B.Tech fourth year, Software Project Management. Submission details can include author/team names, roll numbers, institution, faculty guide, and submission date.
+
+Dependency versions are recorded in manifests and the lockfile; their respective licenses apply. Six short recipe examples are in `apps/backend/src/db/seed.ts`. Credit recipe, asset, and code sources and disclose AI assistance according to college policy. This documentation update was prepared with AI assistance from existing source code.

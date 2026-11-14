@@ -1,19 +1,22 @@
-# Simplification notes
+# Project development notes
 
-The supplied no-login project now runs with a frontend, backend and MongoDB only.
+PantryPilot runs with a Next.js frontend, Express backend, and MongoDB database in one shared local workspace.
 
-- Removed worker workspace, Redis cache and invalidation, BullMQ jobs, rate limiting, Prometheus metrics, Grafana, Nginx, production containers, CI workflow, and generated API documentation infrastructure.
-- Kept pantry CRUD, recipe CRUD and seed dataset, set-based matching, recommendation categories, favorites and shopping lists.
-- Added recipe creation/editing/deletion controls to the recipe page.
-- Recipe deletion also removes its favorites. Existing shopping entries remain usable as a shopping record.
-- Added a Windows-compatible combined development launcher and corrected the compiled backend start path.
-- Included a dependency lockfile and local Windows setup instructions.
+## Implemented features
 
-The fixed internal workspace identifier is retained for compatibility with the original database records. There are no accounts, roles, sessions, tokens, login, profile or settings pages.
+- Pantry CRUD and canonical ingredient normalization.
+- Recipe CRUD, search, detail views, and six seeded examples.
+- Set-based ingredient matching, recommendation categories, and ranking.
+- Favorite recipes and shopping lists generated from missing ingredients.
+- Recipe creation, editing, and deletion controls in the frontend.
+- Recipe deletion with favorite cleanup and retained shopping records.
+- Windows-compatible combined development launcher.
+- Dependency lockfile, sample configuration, and local setup instructions.
+- Coursework documentation, diagrams, and seven application screenshots.
 
 ## Scope mapping
 
-| Original module | Location in the app |
+| Module | Location in the app |
 | --- | --- |
 | Pantry Management | Pantry |
 | Recipe Management | Recipes: create, search, view, edit, delete |
@@ -21,4 +24,4 @@ The fixed internal workspace identifier is retained for compatibility with the o
 | Favorites | Favorite action and Favorites page |
 | Shopping List | Add missing action and Shopping page |
 
-The six sample recipes are maintained by the seed command. MongoDB is the only external service; it can run directly on Windows or through the optional one-service Compose file.
+The fixed internal workspace identifier provides continuity with existing database records. MongoDB can run directly on Windows or through the included Compose service. The seed command maintains the six sample recipes.

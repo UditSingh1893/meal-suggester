@@ -1,0 +1,3 @@
+'use client';
+import Link from 'next/link';
+export default function Nav(){return <header style={{borderBottom:'1px solid #dfe8e1',background:'white'}}><div className="shell" style={{display:'flex',gap:20,alignItems:'center',paddingTop:14,paddingBottom:14}}><Link href="/dashboard" style={{fontWeight:900,fontSize:20}}>PantryPilot</Link><nav style={{display:'flex',gap:14,flex:1,flexWrap:'wrap'}}><Link href="/pantry">Pantry</Link><Link href="/recipes">Recipes</Link><Link href="/recommendations">Recommendations</Link><Link href="/favorites">Favorites</Link><Link href="/shopping-lists">Shopping</Link></nav></div></header>}

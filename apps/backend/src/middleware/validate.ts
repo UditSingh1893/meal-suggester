@@ -1,0 +1,2 @@
+import type { RequestHandler } from 'express'; import type { ZodTypeAny } from 'zod'; import { AppError } from '../utils/errors.js';
+export const validate=(schema:ZodTypeAny,part:'body'|'query'='body'):RequestHandler=>(req,_res,next)=>{ const parsed=schema.safeParse(req[part]); if(!parsed.success) return next(new AppError(400,parsed.error.issues.map(i=>i.message).join('; '),'VALIDATION_ERROR')); (req as any)[part]=parsed.data; next(); };

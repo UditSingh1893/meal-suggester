@@ -1,0 +1,3 @@
+import type { ErrorRequestHandler } from 'express'; import { AppError } from '../utils/errors.js'; import { logger } from '../config/logger.js';
+export const notFound=(req:any,res:any)=>res.status(404).json({error:{code:'NOT_FOUND',message:`Route ${req.method} ${req.path} not found`}});
+export const errorHandler:ErrorRequestHandler=(err,req,res,_next)=>{ const status=err instanceof AppError?err.status:500; const code=err instanceof AppError?err.code:'INTERNAL_ERROR'; if(status>=500) logger.error({err,requestId:(req as any).id},'Unhandled request error'); res.status(status).json({error:{code,message:status===500?'Internal server error':err.message},requestId:(req as any).id}); };

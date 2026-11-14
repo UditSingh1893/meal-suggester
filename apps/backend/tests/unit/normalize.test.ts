@@ -1,0 +1,2 @@
+import { describe,it,expect } from 'vitest'; import { normalizeIngredientName } from '../../src/utils/normalize.js';
+describe('normalizeIngredientName',()=>{it('normalizes case/whitespace/plurals/aliases',()=>{expect(normalizeIngredientName('  TOMATOES ')).toBe('tomato');expect(normalizeIngredientName('Spring   Onion')).toBe('green onion');expect(normalizeIngredientName('potatoes')).toBe('potato')})});

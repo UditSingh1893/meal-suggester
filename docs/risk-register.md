@@ -17,4 +17,4 @@ Reviewed 14 November 2026. The register organizes preventive measures for projec
 | R-11 | Repository hygiene | Low | High | Review tracked files/history and retain environment-file ignore rules. |
 | R-12 | Planning traceability | Medium | Medium | Label illustrative estimates and record actual dates, owners, and effort as work progresses. |
 
-Supporting evidence appears in [the repository review](repository-review.md), [test report](test-report.md), and [project plan](project-plan.md).
+Supporting evidence appears in [the test report](test-report.md) and [project plan](project-plan.md).

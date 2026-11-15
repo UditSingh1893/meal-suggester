@@ -1,10 +1,22 @@
 # Test report and traceability
 
-Prepared 14 November 2026. This report records completed checks and their supporting evidence.
+This report records completed checks and their supporting evidence.
 
-## Recorded build validation
+## Release preparation on 15 November 2026
 
-[VALIDATION.md](../VALIDATION.md) records the earlier Windows build validation: backend compilation and frontend production build passed, along with TypeScript, lint, and the backend test suite.
+Environment: Windows, Node.js 20.17.0, npm 11.7.0, MongoDB 7.0.24. Base commit: `302686f`, with the repository cleanup applied locally. Use the Node versions recommended in the README for installation.
+
+| Check | Result |
+| --- | --- |
+| `npm test` | Passed: 10 tests across 4 files |
+| `npm run lint` | Passed for backend |
+| `npm run build` | Passed for backend and frontend production output |
+| `npm run typecheck` | Passed for backend and frontend |
+| Documentation links and code fences | Passed across the remaining Markdown documents |
+| Repository contents | Source, lockfile, sample configuration, coursework documents, and seven screenshots retained |
+| Common credential patterns in tracked files | Zero matches in the reviewed patterns |
+
+Integration tests used isolated temporary databases. `.gitignore` excludes environment files, dependencies, build output, logs, test artifacts, and local caches. `.gitattributes` normalizes text handling across platforms and treats PNG screenshots as binary files. Duplicate development/validation notes were consolidated into the README and this report; temporary presentation previews, signed download URLs, scripts, and npm cache were removed.
 
 ## Verification on 14 November 2026
 

@@ -18,7 +18,7 @@ This retrospective work breakdown documents the implemented application and prop
 | 6 | Favorites and shopping workflow | 4–6 h | 3, 5 | Existing routes/pages |
 | 7 | Unit, integration, browser verification | 5–8 h | 4, 5, 6 | Backend suite passed; seven application screenshots captured |
 | 8 | Documents and screenshots | 5–8 h | 1–7 | Documentation added; see screenshot gallery |
-| 9 | Repository review and release preparation | 1–2 h | 7, 8 | Local review documented; release preparation described |
+| 9 | Repository review and release preparation | 1–2 h | 7, 8 | Repository hygiene verified; README includes submission details |
 
 Total illustrative planning estimate: **46–69 person-hours**.
 
@@ -35,17 +35,17 @@ Relative days can be aligned with the actual deadline.
 
 ## Responsibilities and progress
 
-For a solo submission the student owns requirements, design, implementation, verification, and release; faculty review the submission. Team submissions can assign named owners to these responsibilities.
+The project team comprises Dhruv Sharma, Saumya Joshi, Kavya Sanghvi, and Udit Singh, under the guidance of Dr. Karan Verma. The work breakdown covers requirements, design, implementation, verification, documentation, and submission preparation. Presentation speaking assignments are separate from development responsibilities.
 
 | Measure | Planned outcome | Actual evidence |
 | --- | --- | --- |
 | Functional scope | Pantry, recipes, matching, favorites, shopping | Implemented in source; selected workflows captured in browser |
-| Backend verification | Tests, types, lint, build | Earlier passes in `VALIDATION.md`; current status in test report |
+| Backend verification | Tests, types, lint, build | Recorded results in [the test report](test-report.md) |
 | Browser verification | Happy-path test and manual walkthrough | Seven screenshots and selected browser assertions recorded |
 | Submission artifacts | Requirements, plan, risks, diagrams, guide, screenshots | Documents added; capture status in gallery |
 
 ## Change management
 
-After upload, track project work using GitHub Issues with an owner, priority, acceptance criteria, and milestone. Suggested board columns: To do, In progress, Review, Done. Record real progress and scope changes with their effort/schedule impact. Existing simplification decisions are in [CHANGES.md](../CHANGES.md).
+Track project work using GitHub Issues with an owner, priority, acceptance criteria, and milestone. Suggested board columns: To do, In progress, Review, Done. Record real progress and scope changes with their effort/schedule impact. Git history records implementation and documentation changes.
 
 Use GitHub Issues, a project board, and a final release tag to organize the submission and identify its evaluated version.

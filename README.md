@@ -35,9 +35,11 @@ See [all seven application screenshots](docs/screenshots/README.md) for the pant
 
 Prerequisites: Node.js 20.19+ or 22.13+ is recommended for the locked tooling, npm, and MongoDB Community Server running locally. Docker Desktop is an alternative for MongoDB.
 
-Clone this repository using its GitHub URL, open PowerShell in the cloned directory, then run:
+Clone the repository and install its locked dependencies:
 
 ```powershell
+git clone https://github.com/UditSingh1893/meal-suggester.git
+cd meal-suggester
 npm ci
 npm run seed
 npm run dev
@@ -107,7 +109,7 @@ $env:TEST_MONGODB_URI='mongodb://127.0.0.1:27017/meal_suggester_test'
 npm test
 ```
 
-Tests clear collections in that test database. Keep it separate from demo data. See [test evidence](docs/test-report.md) and [earlier validation](VALIDATION.md).
+Tests clear collections in that test database. Keep it separate from demo data. See [the test report](docs/test-report.md) for recorded results and coverage.
 
 ## Coursework documentation
 
@@ -121,10 +123,22 @@ Tests clear collections in that test database. Keep it separate from demo data. 
 - [Test report and traceability](docs/test-report.md)
 - [User guide and demo walkthrough](docs/user-guide.md)
 - [Screenshot gallery and checklist](docs/screenshots/README.md)
-- [Repository review](docs/repository-review.md)
+
+## Presentation
+
+[Open the project presentation in Canva](https://www.canva.com/d/KZnXiJCg28I85W9).
 
 ## Submission details and attribution
 
-Course: B.Tech fourth year, Software Project Management. Submission details can include author/team names, roll numbers, institution, faculty guide, and submission date.
+Course: B.Tech fourth year, Software Project Management.
+
+| Team member | Roll number |
+| --- | --- |
+| Dhruv Sharma | 202311028 |
+| Saumya Joshi | 202311039 |
+| Kavya Sanghvi | 202311042 |
+| Udit Singh | 202311083 |
+
+Faculty guide: Dr. Karan Verma.
 
 Dependency versions are recorded in manifests and the lockfile; their respective licenses apply. Six short recipe examples are in `apps/backend/src/db/seed.ts`. Credit recipe, asset, and code sources and disclose AI assistance according to college policy. This documentation update was prepared with AI assistance from existing source code.
